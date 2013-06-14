@@ -1,14 +1,14 @@
 package graph
 
-func (g *Graph) TraverseDFS(f func(*Node)) {
+func (g *Graph) DepthFirstSearch(f func(*Node)) {
 	g.Reset()
 
 	for _, node := range g.Nodes {
-		traverseDFS(node, f)
+		DepthFirstSearchNode(node, f)
 	}
 }
 
-func traverseDFS(node *Node, f func(*Node)) {
+func DepthFirstSearchNode(node *Node, f func(*Node)) {
 	if node.Visited {
 		return
 	}
@@ -16,7 +16,7 @@ func traverseDFS(node *Node, f func(*Node)) {
 	node.Visited = true
 
 	for _, next := range node.Nodes {
-		traverseDFS(next, f)
+		DepthFirstSearchNode(next, f)
 	}
 
 	f(node)
