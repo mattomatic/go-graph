@@ -28,7 +28,12 @@ func scanLine(reader *bufio.Reader, src *int, dst *int) bool {
 }
 
 func readHeader(reader *bufio.Reader) {
-	b, _ := reader.Peek(1)
+	b, err := reader.Peek(1)
+	
+	if err != nil {
+		panic("could not peek file!")
+	}
+	
 	if b[0] == '#' {
 		reader.ReadLine()
 	}
