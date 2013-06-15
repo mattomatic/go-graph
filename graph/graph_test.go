@@ -2,6 +2,7 @@ package graph
 
 import (
 	"testing"
+	"math/rand"
 )
 
 func TestGraphSimple(t *testing.T) {
@@ -80,6 +81,41 @@ func TestReverseFour(t *testing.T) {
 	if !testReverse(nodes...) {
 		t.Error()
 	}
+}
+
+func BenchmarkCreateGraph(b *testing.B) {
+    g := NewGraph()
+    
+    for i := 0; i < b.N; i++ {
+        n := NewNode(i)
+        g.AddNodes(n)
+    }
+}
+
+func BenchmarkAddEdges(b *testing.B) {
+    g := NewGraph()
+    
+    for i := 0; i < b.N; i++ {
+        n := NewNode(i)
+        g.AddNodes(n)
+        
+        p := g.Nodes[rand.Intn(i + 1)]
+        p.AddEdges(n)
+    }
+}
+
+func BenchmarkReverseGraph(b *testing.B) {
+    g := NewGraph()
+    
+    for i := 0; i < b.N; i++ {
+        n := NewNode(i)
+        g.AddNodes(n)
+        
+        p := g.Nodes[rand.Intn(i + 1)]
+        p.AddEdges(n)
+    }
+    
+    g.Reverse()
 }
 
 func testReverse(nodes ...*Node) bool {
