@@ -1,36 +1,14 @@
 package graph
 
 type Node struct {
-	Id      int
-	Visited bool
-	Nodes   map[int]*Node
+	Item
+	edges map[string]*Edge
 }
 
-func NewNode(id int, edges ...*Node) *Node {
-	node := &Node{Id: id, Nodes: make(map[int]*Node)}
-	node.AddEdges(edges...)
-	return node
+func NewNode(item Item) *Node {
+	return &Node{item, make(map[string]*Edge)}
 }
 
-func (n *Node) AddEdges(edges ...*Node) {
-	for _, edge := range edges {
-		n.Nodes[edge.Id] = edge
-	}
-}
-
-func (n *Node) RemoveEdges(edges ...*Node) {
-	for _, edge := range edges {
-		delete(n.Nodes, edge.Id)
-	}
-}
-
-func (n *Node) Adjacent(edges ...*Node) bool {
-	for _, edge := range edges {
-		_, ok := n.Nodes[edge.Id]
-		if !ok {
-			return false
-		}
-	}
-
-	return true
+func (n *Node) connect (tail *Node, weight Weight) {
+    n.edges[tail.Key()] = NewEdge(n, tail, weight)
 }
