@@ -1,5 +1,5 @@
 package graph
 
 type Item interface {
-    Key() string
+	Key() string
 }
